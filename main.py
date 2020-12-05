@@ -25,16 +25,9 @@ try:
     ean = barcode.get('code128', '12121212', writer = barcode.writer.ImageWriter())
     image = ean.render()
 
-    pil_image = Image.new("1", (epd.height, epd.width), 255)
-    draw = ImageDraw.Draw(pil_image)
-
-    pil_image.paste(image, (100, 100))
-
     epd.display(epd.getbuffer(image.resize((epd.height, epd.width))))
 
     time.sleep(60)
-
-
 
 
 except IOError as e:
@@ -45,9 +38,8 @@ except KeyboardInterrupt:
     epd2in9.epdconfig.module_exit()
     exit()
 
-# except Exception as e:
-#     print("error")
-#     logging.info(str(e))
+except Exception as e:
+    logging.info(str(e))
 
 finally:
     epd.Clear(0xFF)
