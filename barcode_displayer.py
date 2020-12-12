@@ -21,15 +21,14 @@ def barcode_displayer(displayed_code: str) -> None:
         epd = epd2in9.EPD()
 
         epd.init(epd.lut_full_update)
-        #epd.Clear(0xFF)
+        epd.Clear(0xFF)
         
-        ean = barcode.get('code128', displayed_code, writer = barcode.writer.ImageWriter())
+        ean = barcode.get('code39', displayed_code, writer = barcode.writer.ImageWriter())
         image = ean.render()
 
         epd.display(epd.getbuffer(image.resize((epd.height, epd.width))))
 
         time.sleep(1)
-
 
     except IOError as e:
         logging.info(e)
